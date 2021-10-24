@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>950</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="image">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>19</y>
+     <width>500</width>
+     <height>500</height>
+    </rect>
+   </property>
+   <property name="midLineWidth">
+    <number>2</number>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>20</y>
+     <width>400</width>
+     <height>500</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>538</x>
+     <y>530</y>
+     <width>400</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Добавить поле для текста</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>600</y>
+     <width>500</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Информация:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="load_btn">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>530</y>
+     <width>500</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Загрузить</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>732</x>
+     <y>607</y>
+     <width>200</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Экспорт</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
