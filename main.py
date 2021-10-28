@@ -4,6 +4,7 @@ from PyQt5 import uic
 from shablons_list import ShablonsList
 from mem_gen_tests import MyPicture
 
+
 class MainForm(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -22,8 +23,13 @@ class MainForm(QMainWindow):
         self.my_picture_form.show()
 
 
+def except_hook(cls, exception, traceback):
+    sys.__excepthook__(cls, exception, traceback)
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainForm()
-    ex.show()
+    form = MainForm()
+    form.show()
+    sys.excepthook = except_hook
     sys.exit(app.exec())
