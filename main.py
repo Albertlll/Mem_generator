@@ -11,6 +11,8 @@ class MainForm(QMainWindow):
         uic.loadUi('main_ui.ui', self)
         self.pushButton_2.clicked.connect(self.open_shablons_form)
         self.pushButton.clicked.connect(self.open_my_picture_form)
+        # Ставим размер шрифтов тут потому что если через дизайн все ломается
+        # self.pushButton_2.setStyleSheet("""""")
 
     def open_shablons_form(self):
         self.hide()
