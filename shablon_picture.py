@@ -11,6 +11,7 @@ from font_list import FontsList
 from text_on_mem import TextOnMem
 from constants import *
 from mem_gen_tests import TextParametrs
+from PyQt5.QtCore import Qt
 
 
 class ShablonPicture(QWidget):
@@ -21,10 +22,10 @@ class ShablonPicture(QWidget):
         self.shablon_texts = shablon_texts
         self.image.setPixmap(QPixmap(im))
         self.load_btn.setEnabled(False)
-        self.pushButton.setEnabled(True)
-        self.pushButton_2.setEnabled(True)
-
-        self.pushButton.clicked.connect(self.add_text)
+        self.add_text_btn.setEnabled(True)
+        self.export_btn.setEnabled(True)
+        self.export_btn.clicked.connect(self.export)
+        self.add_text_btn.clicked.connect(self.add_text)
         self.listWidget.itemDoubleClicked.connect(self.open_parametrs)
         self.texts = []
         self.fname = im
@@ -32,6 +33,16 @@ class ShablonPicture(QWidget):
         self.pil_file.thumbnail(IMAGE_ON_APP_SIZES)
         self.add_begin_text()
         self.reload_texts()
+
+    def keyPressEvent(self, event):
+        if int(event.modifiers()) == Qt.ControlModifier:
+            if event.key() == Qt.Key_E:
+                if self.export_btn.isEnabled():
+                    self.export()
+            if event.key() == Qt.Key_A:
+                if self.add_text_btn.isEnabled():
+                    self.add_text()
+
 
     def export(self):
         name = QFileDialog.getSaveFileName(self, 'Save File', '', "Картинка (*.jpg);;Картинка (*.png)")[0]

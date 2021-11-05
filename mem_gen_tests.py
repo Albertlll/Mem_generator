@@ -11,17 +11,30 @@ from font_list import FontsList
 from text_on_mem import TextOnMem
 # QSpinBox.changeEvent()
 from constants import *
+from PyQt5.QtCore import Qt
 
 
 class MyPicture(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi('UI\\generator_ui.ui', self)
-        self.pushButton.clicked.connect(self.add_text)
+        self.add_text_btn.clicked.connect(self.add_text)
         self.load_btn.clicked.connect(self.load_image)
         self.listWidget.itemDoubleClicked.connect(self.open_parametrs)
         self.texts = []
-        self.pushButton_2.clicked.connect(self.export)
+        self.export_btn.clicked.connect(self.export)
+
+    def keyPressEvent(self, event):
+        if int(event.modifiers()) == Qt.ControlModifier:
+            if event.key() == Qt.Key_E:
+                if self.export_btn.isEnabled():
+                    self.export()
+            if event.key() == Qt.Key_A:
+                if self.add_text_btn.isEnabled():
+                    self.add_text()
+            if event.key() == Qt.Key_L:
+                if self.load_btn.isEnabled():
+                    self.load_image()
 
     def export(self):
         name = QFileDialog.getSaveFileName(self, 'Save File', '', "Картинка (*.jpg);;Картинка (*.png)")[0]
@@ -45,7 +58,9 @@ class MyPicture(QWidget):
         self.pil_file = Image.open(self.fname)
         self.pil_file.thumbnail(IMAGE_ON_APP_SIZES)
         self.reload_texts()
-        self.pushButton.setEnabled(True)
+        self.add_text_btn.setEnabled(True)
+        self.export_btn.setEnabled(True)
+
         self.load_btn.setEnabled(False)
 
     def reload_texts(self):
@@ -128,6 +143,13 @@ class TextParametrs(QWidget):
     def choice_not_own_font(self):
         self.parametrs = FontsList(self)
         self.parametrs.show()
+
+    def keyPressEvent(self, event):
+        if int(event.modifiers()) == Qt.ControlModifier:
+            if event.key() == Qt.Key_C:
+                self.choice_color()
+            if event.key() == Qt.Key_F:
+                self.choice_not_own_font()
 
 
 def except_hook(cls, exception, traceback):
