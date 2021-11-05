@@ -7,108 +7,91 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidgetI
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap, QColor
 from PIL import Image, ImageDraw, ImageFont
-
-IMAGE_ON_APP_SIZES = (500, 500)
-BASE_FONT_SIZE = 20
-BASE_FONT = "Impact Regular.ttf"
-
-
-class TextOnMem:
-    def __init__(self, x=0, y=0, text="I hate Yandex", color=(0, 0, 0), font=BASE_FONT, font_size=BASE_FONT_SIZE):
-        self.x = x
-        self.y = y
-        self.text = text
-        self.color = color
-        self.font = font
-        self.font_size = font_size
-
-    def __str__(self):
-        return self.text
+from constants import *
+from text_on_mem import *
+from shablon_picture import ShablonPicture
+from mem_gen_tests import MyPicture
 
 
 class ShablonsList(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi('shablon_list.ui', self)
+        uic.loadUi('UI\\shablon_list.ui', self)
         self.find_ask = ""
         self.search()
         self.search_edit.textChanged.connect(self.search)
 
     def search(self):
-        con = sqlite3.connect("shablons_DB.db")
+        con = sqlite3.connect("БД\\shablons_DB.db")
         cur = con.cursor()
+        self.list.clear()
         self.find_ask = self.search_edit.text()
 
         self.result = cur.execute(f"""SELECT * FROM shablons
                             WHERE Имя like '%{self.find_ask}%'""").fetchall()
         for i in self.result:
-            print(i)
             item = QListWidgetItem()
             item.setIcon(QIcon(i[0]))
             item.setText(i[1])
-            self.list_of_shablons.addItem(item)
+            self.list.addItem(item)
 
-        self.list_of_shablons.itemDoubleClicked.connect(self.open_shablon)
+        self.list.itemDoubleClicked.connect(self.open_shablon)
 
     def open_shablon(self):
         real_result = self.result[self.sender().currentRow()]
         text = real_result[2]
         im = real_result[0]
         name = real_result[1]
-        self.shablon = ShablonPicture(im, text)
+        print(text)
+        shab_txt_file = [i.strip() for i in open(text, 'r', encoding="utf-8").readlines()]
+        # for i in shab_txt_file:
+        #     print(i)
+        print(shab_txt_file)
+        self.shablon = ShablonPicture(im, shab_txt_file)
         self.shablon.show()
         self.setEnabled(True)
 
 
-class ShablonPicture(QWidget):
-    # shablon_value - список с каринкой, словарем текстов
-    def __init__(self, im, shablon_texts):
-        super().__init__()
-        uic.loadUi('generator_ui.ui', self)
-        self.image.setPixmap(QPixmap(im))
-        self.load_btn.setEnabled(False)
-        self.pushButton.setEnabled(True)
-        self.pushButton.clicked.connect(self.add_text)
-        self.listWidget.itemDoubleClicked.connect(self.open_parametrs)
-        self.texts = []
-        self.fname = im
-        self.pil_file = Image.open(im)
-        self.pil_file.thumbnail(IMAGE_ON_APP_SIZES)
-        self.reload_texts()
-
-    def add_text(self):
-        item = TextOnMem()
-        self.listWidget.addItem(str(TextOnMem()))
-        self.texts.append(item)
-        self.reload_texts()
-
-    # def load_image(self):
-    #     self.fname = QFileDialog.getOpenFileName(self, 'Выбрать картинку', '')[0]
-    #     self.pil_file = Image.open(self.fname)
-    #     self.pil_file.thumbnail(IMAGE_ON_APP_SIZES)
-    #
-    #     self.reload_texts()
-    #     self.pushButton.setEnabled(True)
-    #     self.load_btn.setEnabled(False)
-
-    def reload_texts(self):
-        self.pil_file = Image.open(self.fname)
-        self.pil_file.thumbnail(IMAGE_ON_APP_SIZES)
-        draw_pil_file = ImageDraw.Draw(self.pil_file)
-        for i in range(len(self.texts)):
-            txt = self.texts[i]
-            font = ImageFont.truetype(txt.font, txt.font_size)
-            draw_pil_file.text((txt.x, txt.y), str(txt), fill=txt.color, font=font)
-        # self.image.resize(*pil_file.size)
-        self.pil_file.save("redacting.png")
-
-        self.pixmap = QPixmap("redacting.png")
-        self.image.setPixmap(self.pixmap)
-
-    def open_parametrs(self):
-        self.parametrs = TextParametrs(self.sender().currentRow(), self.texts, self)
-        self.parametrs.show()
-        self.setEnabled(True)
+# class ShablonPicture(QWidget):
+#     # shablon_value - список с каринкой, словарем текстов
+#     def __init__(self, im, shablon_texts):
+#         super().__init__()
+#         uic.loadUi('UI\\generator_ui.ui', self)
+#         self.image.setPixmap(QPixmap(im))
+#         self.load_btn.setEnabled(False)
+#         self.pushButton.setEnabled(True)
+#         self.pushButton.clicked.connect(self.add_text)
+#         self.listWidget.itemDoubleClicked.connect(self.open_parametrs)
+#         self.texts = []
+#         self.fname = im
+#         self.pil_file = Image.open(im)
+#         self.pil_file.thumbnail(IMAGE_ON_APP_SIZES)
+#         self.reload_texts()
+#
+#     def add_text(self):
+#         item = TextOnMem()
+#         self.listWidget.addItem(str(TextOnMem()))
+#         self.texts.append(item)
+#         self.reload_texts()
+#
+#     def reload_texts(self):
+#         self.pil_file = Image.open(self.fname)
+#         self.pil_file.thumbnail(IMAGE_ON_APP_SIZES)
+#         draw_pil_file = ImageDraw.Draw(self.pil_file)
+#         for i in range(len(self.texts)):
+#             txt = self.texts[i]
+#             font = ImageFont.truetype(txt.font, txt.font_size)
+#             draw_pil_file.text((txt.x, txt.y), str(txt), fill=txt.color, font=font)
+#         # self.image.resize(*pil_file.size)
+#         self.pil_file.save("redacting.png")
+#
+#         self.pixmap = QPixmap("redacting.png")
+#         self.image.setPixmap(self.pixmap)
+#
+#     def open_parametrs(self):
+#         self.parametrs = TextParametrs(self.sender().currentRow(), self.texts, self)
+#         self.parametrs.show()
+#         self.setEnabled(True)
 
 
 class TextParametrs(QWidget):
@@ -123,7 +106,7 @@ class TextParametrs(QWidget):
         self.font_size = self.sndr.font_size
         self.font = self.sndr.font
 
-        uic.loadUi('text_parametrs_ui.ui', self)
+        uic.loadUi('UI\\text_parametrs_ui.ui', self)
         # Устанавливаем значения не по умолчанию, ведь он мог редактироваться ранее
         # print(f"background-color: rgba({', '.join(list(str(i) for i in self.color))});")
         self.change_color.setStyleSheet(f"background-color: rgb({', '.join(list(str(i) for i in self.color))});"

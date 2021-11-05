@@ -8,7 +8,7 @@ from mem_gen_tests import MyPicture
 class MainForm(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main_ui.ui', self)
+        uic.loadUi('UI\\main_ui.ui', self)
         self.pushButton_2.clicked.connect(self.open_shablons_form)
         self.pushButton.clicked.connect(self.open_my_picture_form)
         # Ставим размер шрифтов тут потому что если через дизайн все ломается

@@ -1,0 +1,3 @@
+IMAGE_ON_APP_SIZES = (500, 500)
+BASE_FONT_SIZE = 20
+BASE_FONT = "Impact Regular.ttf"

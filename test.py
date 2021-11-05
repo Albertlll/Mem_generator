@@ -1,43 +1,23 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-import sys
+import os
+import pprint
+from PIL import Image, ImageDraw, ImageFont
+import sqlite3
+
+con = sqlite3.connect("БД\\shablons_DB.db")
+cur = con.cursor()
+
+for i in os.listdir("shablons_images"):
+    if i[-4:] == ".jpg" or i[:-4] == "arm_to_face" or i[:-4] == "cool_spanch":
+        continue
+    file = open(f'shablons_images\\{i}\\texts_on_mem.txt', mode="w", encoding="utf-8")
+    lst = ['2', '10', '10', 'Тут может быть', '0 0 0', 'Impact Regular.ttf', '20', '10', '30', 'ваш текст',
+           '0 0 0', 'Impact Regular.ttf', '20']
+    file.write("\n".join(lst))
+
+# con.commit()
+# print(open("shablons_images\\больно\\texts_on_mem.txt", 'r', encoding="utf-8"))
+# print("shablons_images\\больно\\text_on_mem.txt")
+# print(open("shablons_images/больно/texts_on_mem.txt"))
+# print([i.strip() for i in open("shablons_images\\Баз Лайтер\\texts_on_mem.txt", encoding="utf-8").readlines()])
 
 
-class ScrollLabel(QScrollArea):
-    def __init__(self, *args, **kwargs):
-        QScrollArea.__init__(self, *args, **kwargs)
-        self.setWidgetResizable(True)
-        content = QWidget(self)
-        self.setWidget(content)
-        lay = QVBoxLayout(content)
-        self.label = QLabel(content)
-        self.label.setWordWrap(True)
-        lay.addWidget(self.label)
-
-    # the setText method
-
-    def setText(self, text):
-        self.label.setText(text)
-
-
-class Window(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Python ")
-        self.setGeometry(100, 100, 600, 400)
-        self.UiComponents()
-        self.show()
-
-    def UiComponents(self):
-        text = "ааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа"
-
-        label = ScrollLabel(self)
-        label.setText(text)
-        label.setGeometry(100, 100, 200, 80)
-
-
-App = QApplication(sys.argv)
-window = Window()
-window.show()
-sys.exit(App.exec())
