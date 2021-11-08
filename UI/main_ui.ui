@@ -44,7 +44,7 @@
      <string>Создавалка мемов</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="open_shablon_list_btn">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -81,7 +81,7 @@ QPushButton:hover
      <string>По шаблону</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="open_own_picture_btn">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -117,6 +117,44 @@ QPushButton:hover
     </property>
     <property name="text">
      <string>Своя картинка</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="open_recent_list_btn">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>390</y>
+      <width>300</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Inter,sans-serif</family>
+      <pointsize>-1</pointsize>
+      <weight>62</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{
+	font-family: Inter,sans-serif;
+	font-size:25px;
+
+	background-color: rgb(233, 196, 106);
+	font-weight: 500;
+	border-radius: 20px;
+}
+
+QPushButton:hover
+{
+	background-color: rgb(223, 41, 53);
+	color: white;
+}</string>
+    </property>
+    <property name="text">
+     <string>Недавние</string>
     </property>
    </widget>
   </widget>
