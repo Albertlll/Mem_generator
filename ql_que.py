@@ -28,4 +28,4 @@ def get_shablons(find_ask):
 def get_all_recent():
     con = sqlite3.connect("БД\\shablons_DB.db")
     cur = con.cursor()
-    return cur.execute(f"""SELECT * FROM recent""")
+    return cur.execute(f"""SELECT * FROM recent""").fetchall()
