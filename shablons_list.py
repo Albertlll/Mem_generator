@@ -27,6 +27,7 @@ class ShablonsList(QWidget, Ui_Form):
         self.search_edit.textChanged.connect(self.search)
 
     def search(self):
+        self.list.clear()
         self.find_ask = self.search_edit.text()
         self.result = get_shablons(self.find_ask)
         for i in self.result:
@@ -47,6 +48,7 @@ class ShablonsList(QWidget, Ui_Form):
         text = real_result[2]
         im = real_result[0]
         name = real_result[1]
+        print(text)
         shab_txt_file = [i.strip() for i in open(text, 'r', encoding="utf-8").readlines()]
         # for i in shab_txt_file:
         #     print(i)
