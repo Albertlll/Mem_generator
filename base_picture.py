@@ -97,3 +97,9 @@ class BasePicture(QWidget, Ui_Form):
         self.parametrs = text_parameters.TextParametrs(self.sender().currentRow(), self.texts, self)
         self.parametrs.show()
         self.setEnabled(True)
+
+    def del_text(self):
+        text_index = self.listWidget.currentRow()
+        self.listWidget.takeItem(text_index)
+        del self.texts[text_index]
+        self.reload_texts()

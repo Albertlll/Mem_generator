@@ -31,6 +31,9 @@ class BaseShablonPicture(base_picture.BasePicture):
             if event.key() == Qt.Key_A:
                 if self.add_text_btn.isEnabled():
                     self.add_text()
+            if event.key() == Qt.Key_Delete:
+                if self.add_text_btn.isEnabled():
+                    self.del_text()
 
     def add_begin_text(self):
         n_of_texts = int(self.shablon_texts[0])
